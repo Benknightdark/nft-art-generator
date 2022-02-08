@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sharp": "^0.29.3"
+    "daddyjoke": "^4.0.0",
+    "one-liner-joke": "^1.2.2",
+    "sharp": "^0.29.3",
+    "yourmama": "^1.0.6"
   }
 }

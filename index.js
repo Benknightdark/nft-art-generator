@@ -1,5 +1,6 @@
 const { readFileSync, writeFileSync, readdirSync, rmSync, existsSync, mkdirSync } = require('fs');
 const sharp = require('sharp');
+const yourmama = require('yourmama')
 
 const template = `
     <svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,12 +11,13 @@ const template = `
         <!-- nose -->
         <!-- mouth -->
         <!-- beard -->
+        <text x="0" y="15" fill="white"><!-- id --></text>
     </svg>
 `
 
 const takenNames = {};
 const takenFaces = {};
-let idx = 999;
+let idx = 1;
 
 function randInt(max) {
     return Math.floor(Math.random() * (max + 1));
@@ -60,7 +62,7 @@ async function svgToPng(name) {
 }
 
 
-function createImage(idx) {
+async function createImage(idx) {
 
     const bg = randInt(5);
     const hair = randInt(7);
@@ -78,6 +80,7 @@ function createImage(idx) {
         const name = getRandomName()
         console.log(name)
         face[takenFaces] = face;
+        const randomJoke =  await yourmama.getRandom()
 
         const final = template
             .replace('<!-- bg -->', getLayer(`bg${bg}`))
@@ -87,8 +90,9 @@ function createImage(idx) {
             .replace('<!-- nose -->', getLayer(`nose${nose}`))
             .replace('<!-- mouth -->', getLayer(`mouth${mouth}`))
             .replace('<!-- beard -->', getLayer(`beard${beard}`, 0.5))
-
-        const meta = {
+            .replace('<!-- id -->', randomJoke)
+            
+            const meta = {
             name,
             description: `A drawing of ${name.split('-').join(' ')}`,
             image: `${idx}.png`,
@@ -117,7 +121,10 @@ if (!existsSync('./out')){
 readdirSync('./out').forEach(f => rmSync(`./out/${f}`));
 
 
-do {
-    createImage(idx);
-    idx--;
-  } while (idx >= 0);
+(async()=>{
+
+    do {
+        createImage(idx);
+        idx--;
+      } while (idx >= 0);
+})()

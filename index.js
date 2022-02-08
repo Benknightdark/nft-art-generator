@@ -11,13 +11,12 @@ const template = `
         <!-- nose -->
         <!-- mouth -->
         <!-- beard -->
-        <text x="0" y="15" fill="white"><!-- id --></text>
     </svg>
 `
 
 const takenNames = {};
 const takenFaces = {};
-let idx = 1;
+let idx = 999;
 
 function randInt(max) {
     return Math.floor(Math.random() * (max + 1));
